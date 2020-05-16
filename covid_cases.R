@@ -1,15 +1,17 @@
 library(tidyverse)
+# download the nytimes master county data - this is updated daily for the most part
 
 covid <- read_csv(url("https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-counties.csv"))
 
 
-######## St. Louis County ########
+######## St. Louis County, MN ########
 
 #select st. louis county
 
 st.louis <- covid %>% filter(state=="Minnesota", county=="St. Louis") %>% 
   mutate(county,diff = cases - lag(cases, default = first(cases)))
 
+#Cumulative cases over time plot
 
 covid %>% filter(state=="Minnesota", county=="St. Louis") %>% 
   ggplot(., aes(date, cases, colour=county)) + 
@@ -17,33 +19,37 @@ covid %>% filter(state=="Minnesota", county=="St. Louis") %>%
  # geom_line(aes(date, deaths)) +
   theme_classic()
 
-
+# New Daily Cases
 ggplot(st.louis, aes(date, diff)) + geom_col() + theme_classic()
 
 
 
-######### San Mateo County ########
+######### San Mateo County, CA ########
 san.mat <- covid %>% filter(state=="California", county=="San Mateo") %>% 
           mutate(county,diff = cases - lag(cases, default = first(cases)))
 
+#Cumulative cases over time plot
 ggplot(san.mat, aes(date, cases, colour=county)) + 
   geom_line() +
   # geom_line(aes(date, deaths)) +
   theme_classic()
 
+# New Daily Cases
 ggplot(san.mat, aes(date, diff)) + geom_col() + theme_classic() +
   labs(title="Daily New Cases of Covid-19 - San Mateo County, CA", x= "Date", y="New Cases")
 
 
-###### Santa Clara County #######
+###### Santa Clara County, CA #######
 
 santa.clara <- covid %>% filter(state=="California", county=="Santa Clara") %>% 
   mutate(county,diff = cases - lag(cases, default = first(cases)))
 
+#Cumulative Cases over time plot
 ggplot(santa.clara, aes(date, cases, colour=county)) + 
   geom_line() +
   # geom_line(aes(date, deaths)) +
   theme_classic()
 
+# New Daily Cases
 ggplot(santa.clara, aes(date, diff)) + geom_col() + theme_classic() +
   labs(title="Daily New Cases of Covid-19 - San Mateo County, CA", x= "Date", y="New Cases")
