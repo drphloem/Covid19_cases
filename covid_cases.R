@@ -1,4 +1,6 @@
-library(tidyverse)
+library(tidyverse); library(zoo)
+
+
 # download the nytimes master county data - this is updated daily for the most part
 
 covid <- read_csv(url("https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-counties.csv"))
@@ -20,7 +22,8 @@ covid %>% filter(state=="Minnesota", county=="St. Louis") %>%
   theme_classic()
 
 # New Daily Cases
-ggplot(st.louis, aes(date, diff)) + geom_col() + theme_classic()
+ggplot(st.louis, aes(date, diff)) + geom_col(fill="#1A85FF") + 
+  geom_line(aes(y=rollmean(diff, 7, fill = TRUE )), colour = "#D41159") + theme_classic()
 
 
 
