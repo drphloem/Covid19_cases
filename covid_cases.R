@@ -23,7 +23,9 @@ covid %>% filter(state=="Minnesota", county=="St. Louis") %>%
 
 # New Daily Cases
 ggplot(st.louis, aes(date, diff)) + geom_col(fill="#1A85FF") + 
-  geom_line(aes(y=rollmean(diff, 7, fill = TRUE )), colour = "#D41159") + theme_classic()
+  geom_line(aes(y=rollmean(diff, 7, fill = TRUE )), colour = "#D41159") +
+  labs(y="Number of New Cases", x= "Date") +
+  theme_classic()
 
 
 
